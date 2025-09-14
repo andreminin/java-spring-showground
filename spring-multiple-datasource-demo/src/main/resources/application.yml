@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: spring-service-demo
+  # Ollama AI configuration
+  ai:
+    ollama:
+      base-url: http://ollama-server:11434
+      chat:
+        model: mistral-nemo:12b
+        options:
+          temperature: 0.0
+
+  # PostgreSQL DataSource (Ollama)
+  datasource:
+    ollama:
+      # using docker: docker run --name pg-test -e POSTGRES_DB=test -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:16
+      url: jdbc:postgresql://localhost:5432/test
+      username: user
+      password: password
+      driver-class-name: org.postgresql.Driver
+
+    # Oracle DataSource (User Management)
+    user:
+      #url: jdbc:oracle:thin:@localhost:1521:XE
+      # using docker: docker run -itd --name myoracle -p 1521:1521 -e ORACLE_PWD=oracle  container-registry.oracle.com/database/free:latest
+      url: jdbc:oracle:thin:@localhost:1521:FREE
+      username: system
+      password: oracle
+      driver-class-name: oracle.jdbc.OracleDriver
+
+  # JPA Configuration
+  jpa:
+    # Default properties (can be overridden per persistence unit)
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  # Enable or disable sample data initialization
+  app:
+    init-sample-data: true
+
+server:
+  port: 8080
+
+# OpenAPI/Swagger configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
